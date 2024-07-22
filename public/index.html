@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="assets/dg_favicon.ico" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+    
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: aliceblue;
+      width: 100%;
+      height: 100%;
+    }
+    /* .container
+    {
+      display: flex;
+    } */
+
+    .container-box {
+      width: 70%;
+      height: 500px;
+      margin: 20px auto;
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border: 1px solid black;
+      background-color: #57C5B6;
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.9);
+    }
+
+    .topcontainer {
+      text-align: center;
+    }
+
+    .topcontainer h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .topcontainer p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.7rem;
+      text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .text-speech-container {
+      width: 60vw;
+      height: 300px;
+      border: 1px solid green;
+      background-color: white;
+      border-radius: 10px;
+      color: black;
+      padding: 10px;
+      margin: 0px auto;
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+      overflow-y: auto; /* Added to handle overflow text */
+    }
+
+    .buttoncontainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0px;
+    }
+
+    .buttoncontainer img {
+      width: 50px;
+      cursor: pointer;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .title img {
+      height: 50px;
+    }
+    .grid-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .tts-section, .information-section {
+      width: 45%;
+    }
+    select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .button-icon {
+      margin-right: 8px;
+    }
+    .gradient-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .gradient-list li {
+      background: linear-gradient(90deg, #f3ec78, #af4261);
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .gradient-list a {
+      color: white;
+      text-decoration: none;
+    }
+    .gradient-list a:hover {
+      text-decoration: underline;
+    }
+    #transcription-result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="first-div">
+      <div class="title">
+        <img src="assets/logo-6ad0fabf.png" alt="Logo">
+        <h1>Text-to-Speech</h1>
+      </div>
+      <div class="grid-container">
+        <section class="tts-section">
+          <label for="models">Choose a voice:</label>
+          <select id="models" name="models">
+            <option value="aura-asteria-en">Asteria (Female US English)</option>
+            <option value="aura-luna-en">Luna (Female US English)</option>
+            <option value="aura-stella-en">Stella (Female US English)</option>
+            <option value="aura-athena-en">Athena (Female UK English)</option>
+            <option value="aura-hera-en">Hera (Female US English)</option>
+            <option value="aura-orion-en">Orion (Male US English)</option>
+            <option value="aura-arcas-en">Arcas (Male US English)</option>
+            <option value="aura-perseus-en">Perseus (Male US English)</option>
+            <option value="aura-angus-en">Angus (Male Irish English)</option>
+            <option value="aura-orpheus-en">Orpheus (Male US English)</option>
+            <option value="aura-helios-en">Helios (Male UK English)</option>
+            <option value="aura-zeus-en">Zeus (Male US English)</option>
+          </select>
+          <textarea id="text-input" placeholder="Enter text to be converted to speech..."></textarea>
+          <div class="button-container">
+            <button id="play-button">
+              <i class="button-icon fa-solid fa-play"></i> Play
+            </button>
+            <div id="error-message"></div>
+          </div>
+        </section>
+        
+      </div>
+    </div>
+    <div class="second-div">
+      <div class="container-box">
+        <div class="topcontainer">
+          <h2>Speech to Text Converter</h2>
+          <br />
+          <p>App that converts speech from the microphone to text</p>
+        </div>
+    
+        <div class="text-speech-container" id="text-speech-container">
+          <!-- This is where the transcribed text will appear -->
+          <!-- Placeholder text -->
+          Hello, world!
+        </div>
+
+    
+        <div class="buttoncontainer">
+          <img id="copy-button" src="copy.png" alt="Copy" />
+          <img id="record-button" src="voice.png" alt="Record" />
+          <img id="stop-button" src="stopvoice.png" alt="Stop" />
+        </div>
+      </div>
+    </div>
+    </div>
+  <script src="client.js"></script>
+  <script src="sty.js"></script>
+</body>
+</html>
