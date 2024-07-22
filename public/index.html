@@ -187,20 +187,24 @@
           <br />
           <p>App that converts speech from the microphone to text</p>
         </div>
-    
+      
         <div class="text-speech-container" id="text-speech-container">
           <!-- This is where the transcribed text will appear -->
           <!-- Placeholder text -->
-          Hello, world!
         </div>
-
-    
+      
         <div class="buttoncontainer">
-          <img id="copy-button" src="copy.png" alt="Copy" />
-          <img id="record-button" src="voice.png" alt="Record" />
-          <img id="stop-button" src="stopvoice.png" alt="Stop" />
+          <button id="start-recording">
+            <img src="voice.png" alt="Record" />
+            Start Recording
+          </button>
+          <button id="stop-recording" disabled>
+            <img src="stopvoice.png" alt="Stop" />
+            Stop Recording
+          </button>
         </div>
       </div>
+      
     </div>
     </div>
   <script src="client.js"></script>
